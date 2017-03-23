@@ -1,3 +1,4 @@
+/*jshint esversion: 6*/
 /**
  * Class => Item(name)
  * -----------------------------
@@ -8,6 +9,12 @@
  * @property {string} name
  */
 
+class Item {
+  constructor (name) {
+    this.name = name;
+  }
+
+}
 
 /**
  * Class => Weapon(name, damage)
@@ -25,6 +32,13 @@
  * @property {number} damage
  */
 
+class Weapon extends Item {
+  constructor (name, damage)  {
+    super(name);
+    this.damage = damage;
+  }
+
+}
 
 /**
  * Weapon Extends Item Class
@@ -49,6 +63,12 @@
  * @property {number} energy
  */
 
+class Food extends Item {
+  constructor(name, energy) {
+    super(name);
+    this.energy = energy;
+  }
+}
 
 /**
  * Food Extends Item Class
@@ -79,6 +99,46 @@
  * @property {method} getMaxHealth         Returns private variable `maxHealth`.
  */
 
+class Player {
+  constructor (name, health, strength, speed) {
+    this.name = name;
+    this.health = health;
+    this.strength = strength;
+    this.speed = speed;
+    this.isAlive = true;
+    this.equipped = false;
+    this._pack = [];
+    this._maxHealth = health;
+  }
+
+  getPack () {
+    return this._pack;
+  }
+
+  getMaxHealth () {
+    return this._maxHealth;
+  }
+
+  takeItem (item) {
+    var put = this._pack;
+    put.push(item);
+    var itemCount = put.length;
+    console.log(item);
+    if (itemCount > 3) {
+      console.log(player1 + item);
+      return false;
+    // } else if ( itemCount  ) {
+    //   console.log('Your pack is full');
+    }
+
+    console.log(itemCount);
+    //return
+  }
+}
+// var orange = new Food('Orange', 5);
+var player1 = new Player('Andrew', 100, 100, 100);
+// console.log(player1.takeItem(orange));
+// player1.takeItem (new Weapon('Axe', 25));
 
 /**
  * Player Class Method => checkPack()
