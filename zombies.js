@@ -121,22 +121,116 @@ class Player {
 
   takeItem (item) {
     var put = this._pack;
-    put.push(item);
-    var itemCount = put.length;
-    console.log(item);
-    if (itemCount > 3) {
-      console.log(player1 + item);
-      return false;
-    // } else if ( itemCount  ) {
-    //   console.log('Your pack is full');
-    }
 
-    console.log(itemCount);
+    var itemCount = put.length;
+    //console.log(item);
+    if (itemCount >= 3) {
+      console.log('Your pack is full');
+      return false;
+    } else if ( itemCount < 3 ) {
+      put.push(item);
+
+    }
+    //console.log(itemCount);
     //return
   }
+
+  discardItem (item) {
+    var pack = this._pack;
+    var checkPack = pack.indexOf(item);
+    if (checkPack !== -1) {
+      pack.splice(checkPack, 1);
+      console.log('Your Shit was tossed, foo!');
+      return true;
+    } else if (checkPack === -1) {
+      console.log('Nothing was discarded since the ' + item + ' could not be found');
+      return false;
+    }
+
+  }
+
+  checkPack () {
+    console.log(this.getPack().join(' and '));
+    return this.getPack();
+  }
+
+  equip(itemToEquip) {
+    var pack = this.getPack();
+    var indexOfWeapon = pack.indexOf(itemToEquip);
+    //console.log(indexOfWeapon);
+
+    //check if item is a weapon & if weapon is in pack
+    if ( itemToEquip instanceof Weapon && indexOfWeapon !== -1) {
+
+      //check if player doesn't have anything equipped
+      if ( this.equipped === false ) {
+
+        //equips weapon
+        this.equipped = itemToEquip;
+
+        //removes the itemToEquip from pack by finding if it exists in bag with indexOf
+        pack.splice(indexOfWeapon, 1);
+      } else {
+        //if have an item in equipped, puts what is currently equipped into bag
+        pack.push(this.equipped);
+
+        //equip itemToEquip
+        this.equipped = itemToEquip;
+
+        //removes the item from pack
+        pack.splice(indexOfWeapon, 1);
+      }
+    }
+  }
+
+  eat( itemToEat ) {
+    var pack = this.getPack();
+    var indexOfFood = pack.indexOf(itemToEat);
+    //check for itemToEat to be Food & if it's in pack
+    if ( itemToEat instanceof Food && indexOfFood !== -1) {
+      console.log('if is working');
+      pack.splice(indexOfFood, 1);
+      this.health += itemToEat.energy;
+      if ( this.health > this.getMaxHealth() ) {
+        this.health = this.getMaxHealth();
+      }
+    }
+  }
+
+  useItem(item) {
+    if ( item instanceof Weapon ) {
+      this.equip(item);
+    }
+    else if ( item instanceof Food )  {
+      this.eat(item);
+    }
+  }
+
+  equippedWith()  {
+    if ( this.equipped instanceof Weapon )  {
+      console.log(this.name + ' you currently have ' +this.equipped + ' equipped.');
+      return this.equipped;
+    }
+    else if ( this.equipped === false ) {
+      console.log('You currently have nothing equipped');
+      return false;
+    }
+
+  }
 }
+
+class Zombie {
+  constructor( health, strength, speed ) {
+    this.health = health;
+    this.strength = strength;
+    this.speed = speed;
+    this._maxHealth = health;
+    this.isAlive = true;
+  }
+}
+
 // var orange = new Food('Orange', 5);
-var player1 = new Player('Andrew', 100, 100, 100);
+//var player1 = new Player('Andrew', 100, 100, 100);
 // console.log(player1.takeItem(orange));
 // player1.takeItem (new Weapon('Axe', 25));
 
