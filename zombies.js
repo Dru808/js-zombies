@@ -209,7 +209,7 @@ class Player {
   equippedWith()  {
     if ( this.equipped instanceof Weapon )  {
       console.log(this.name + ' you currently have ' +this.equipped + ' equipped.');
-      return this.equipped;
+      return this.equipped.name;
     }
     else if ( this.equipped === false ) {
       console.log('You currently have nothing equipped');
@@ -228,6 +228,32 @@ class Zombie {
     this.isAlive = true;
   }
 }
+
+class FastZombie extends Zombie {
+  constructor(health, strength, speed)  {
+    super(health, strength, speed);
+  }
+}
+
+class StrongZombie extends Zombie {
+  constructor(health, strength, speed)  {
+    super(health, strength, speed);
+  }
+}
+
+class RangedZombie extends Zombie {
+  constructor(health, strength, speed)  {
+    super(health, strength, speed);
+  }
+}
+
+class ExplodingZombie extends Zombie {
+  constructor(health, strength, speed)  {
+    super(health, strength, speed);
+  }
+}
+
+
 
 // var orange = new Food('Orange', 5);
 //var player1 = new Player('Andrew', 100, 100, 100);
